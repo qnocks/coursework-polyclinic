@@ -1,5 +1,8 @@
 package ru.rostanin.polyclinic.datastructures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unchecked")
 public class HashTable<K extends Comparable<K>, T> {
 
@@ -64,11 +67,12 @@ public class HashTable<K extends Comparable<K>, T> {
         }
     }
 
-    public void update(K key, T value) {
+    public boolean update(K key, T value) {
         int hash = findHash(key);
-        if (hash < 0) return;
+        if (hash < 0) return false;
 
         entries[hash].value = value;
+        return true;
     }
 
     public void remove(K key) {
@@ -83,7 +87,7 @@ public class HashTable<K extends Comparable<K>, T> {
         int hash = findHash(key);
         if (hash < 0) return null;
 
-        return (T) entries[hash];
+        return (T) entries[hash].value;
     }
 
     public void clear() {
@@ -92,6 +96,19 @@ public class HashTable<K extends Comparable<K>, T> {
 
         this.size = 0;
         this.capacity = DEFAULT_CAPACITY;
+    }
+
+    public List<T> list() {
+
+        List<T> list = new ArrayList<>();
+
+        for (int i = 0; i < capacity; i++) {
+            if (entries[i] != null) {
+                list.add((T) entries[i].value);
+            }
+        }
+
+        return list;
     }
 
     private int hash(K key) {
@@ -104,7 +121,7 @@ public class HashTable<K extends Comparable<K>, T> {
             for (int i = 0; i < stringKey.length(); i++)
                 hash = HASH_CONSTANT * hash + stringKey.charAt(i);
 
-            return hash % capacity;
+            return Math.abs(hash % capacity);
 
         } else
             return Math.abs(key.hashCode() % capacity);

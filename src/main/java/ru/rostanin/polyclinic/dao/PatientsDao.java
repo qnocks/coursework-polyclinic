@@ -1,10 +1,12 @@
 package ru.rostanin.polyclinic.dao;
 
+import org.springframework.stereotype.Component;
 import ru.rostanin.polyclinic.datastructures.HashTable;
 import ru.rostanin.polyclinic.domain.Patient;
 
 import java.util.List;
 
+@Component
 public class PatientsDao implements CrudDao<String, Patient> {
 
     private static long id = 0L;
@@ -23,10 +25,11 @@ public class PatientsDao implements CrudDao<String, Patient> {
     }
 
     @Override
-    public Patient update(Patient entity) {
-        // TODO: this HashTable's update method should probably return boolean or sth
-        patients.update(entity.getRegistrationNumber(), entity);
-        return entity;
+    public Patient update(String id, Patient entity) {
+        entity.setId(patients.get(id).getId());
+        if (patients.update(id, entity))
+            return entity;
+        return null;
     }
 
     @Override
@@ -36,7 +39,6 @@ public class PatientsDao implements CrudDao<String, Patient> {
 
     @Override
     public List<Patient> findAll() {
-        // TODO: HashTable should provides list representation of itself
-        return null;
+        return patients.list();
     }
 }

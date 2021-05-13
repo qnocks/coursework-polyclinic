@@ -60,14 +60,34 @@ public class AvlTree<K extends Comparable<K>, T> {
         }
 
         // Update balance factor and height values.
-        update(node);
+        fix(node);
 
         // Re-balance tree.
         return balance(node);
     }
 
-    // Update a node's height and balance factor.
-    private void update(Node<K, T> node) {
+    public boolean update(K key, T value) {
+
+        if (key == null || value == null) return false;
+        if (contains(key) == null) return false;
+
+        Node<K, T> node = root;
+
+        while (node != null) {
+            if (key.compareTo(node.key) < 0) node = node.left;
+            else if (key.compareTo(node.key) > 0) node = node.right;
+            else {
+                node.value = value;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    // Fix a node's height and balance factor.
+    private void fix(Node<K, T> node) {
 
         int leftNodeHeight = (node.left == null) ? -1 : node.left.height;
         int rightNodeHeight = (node.right == null) ? -1 : node.right.height;
@@ -132,8 +152,8 @@ public class AvlTree<K extends Comparable<K>, T> {
         Node<K, T> newParent = node.right;
         node.right = newParent.left;
         newParent.left = node;
-        update(node);
-        update(newParent);
+        fix(node);
+        fix(newParent);
         return newParent;
     }
 
@@ -141,8 +161,8 @@ public class AvlTree<K extends Comparable<K>, T> {
         Node<K, T> newParent = node.left;
         node.left = newParent.right;
         newParent.right = node;
-        update(node);
-        update(newParent);
+        fix(node);
+        fix(newParent);
         return newParent;
     }
 
@@ -208,8 +228,8 @@ public class AvlTree<K extends Comparable<K>, T> {
                 }
             }
         }
-        // Update balance factor and height values.
-        update(node);
+        // Fix balance factor and height values.
+        fix(node);
         // Re-balance tree.
         return balance(node);
     }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <h2 class="title">Add new appointment</h2>
+
+    <div class="col-md-8">
+        <form action="#" th:action="@{/appointments/new}" method="post" th:object="${appointment}">
+            <div class="form-group">
+                <label for="registrationNumber">Registration Number</label>
+                <input type="text" class="form-control" id="registrationNumber" name="registrationNumber">
+                <small th:if="${#fields.hasErrors('registrationNumber')}" th:errors="*{registrationNumber}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full name</label>
+                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" th:errorClass="errorInput">
+                <small th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="text" class="form-control" id="date" name="date">
+                <small th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="text" class="form-control" id="time" name="time">
+                <small th:if="${#fields.hasErrors('time')}" th:errors="*{time}" th:errorClass="text-danger"></small>
+            </div>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Add">
+        </form>
+    </div>
+
+
+<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

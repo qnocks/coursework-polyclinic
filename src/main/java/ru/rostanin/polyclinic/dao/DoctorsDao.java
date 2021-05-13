@@ -1,10 +1,12 @@
 package ru.rostanin.polyclinic.dao;
 
+import org.springframework.stereotype.Component;
 import ru.rostanin.polyclinic.datastructures.AvlTree;
 import ru.rostanin.polyclinic.domain.Doctor;
 
 import java.util.List;
 
+@Component
 public class DoctorsDao implements CrudDao<String, Doctor> {
 
     private static long id = 0L;
@@ -24,8 +26,11 @@ public class DoctorsDao implements CrudDao<String, Doctor> {
     }
 
     @Override
-    public Doctor update(Doctor entity) {
-        // TODO: AvlTree hasn't update method.
+    public Doctor update(String id, Doctor entity) {
+        // entity.setId(doctors.contains(id).getId());
+        if (doctors.update(id, entity)) {
+            return entity;
+        }
         return null;
     }
 

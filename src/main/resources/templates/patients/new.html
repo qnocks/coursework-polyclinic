@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <h2 class="title">Add new patient</h2>
+
+    <div class="col-md-8">
+        <form action="#" th:action="@{/patients/new}" method="post" th:object="${patient}">
+            <div class="form-group">
+                <label for="registrationNumber">Registration number</label>
+                <input type="text" class="form-control" id="registrationNumber" name="registrationNumber">
+                <small th:if="${#fields.hasErrors('registrationNumber')}" th:errors="*{registrationNumber}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="fullName"> Full name</label>
+                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" th:errorClass="errorInput">
+                <small th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">BirthDate</label>
+                <input type="text" class="form-control" id="birthDate" name="birthDate">
+                <small th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="address"> Address</label>
+                <input type="text" class="form-control" id="address" name="address">
+                <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="job"> Job</label>
+                <input type="text" class="form-control" id="job" name="job">
+                <small th:if="${#fields.hasErrors('job')}" th:errors="*{job}" th:errorClass="text-danger"></small>
+            </div>
+            <input type="submit" value="Add" class="btn btn-primary">
+        </form>
+    </div>
+</body>
+</html>

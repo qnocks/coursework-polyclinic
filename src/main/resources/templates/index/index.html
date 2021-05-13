@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <h3 class="title">Welcome to home page</h3>
+
+    <div style="display: flex; justify-content: space-around">
+        <span><a th:href="@{/doctors}" class="btn btn-info">Doctors</a></span>
+        <span><a th:href="@{/patients}" class="btn btn-info">Patients</a></span>
+        <span><a th:href="@{/appointments}" class="btn btn-info">Appointments</a></span>
+    </div>
+</body>
+</html>

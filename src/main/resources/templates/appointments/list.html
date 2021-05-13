@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <h1 class="title">Appointments</h1>
+
+    <div><a th:href="@{/appointments/new}" class="btn btn-primary">Add an appointment</a></div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Registration Number</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${appointment.id}"></td>
+            <td th:text="${appointment.registrationNumber}"></td>
+            <td th:text="${appointment.fullName}"></td>
+            <td th:text="${appointment.date}"></td>
+            <td th:text="${appointment.time}"></td>
+            <td>
+                <a th:href="@{/appointments/{id}/edit(id=${appointment.fullName})}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}/delete(id=${appointment.fullName})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+   </table>
+</body>
+</html>
