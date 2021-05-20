@@ -38,6 +38,7 @@ public class MySkipList<K extends Comparable<K>, V> implements Iterable<V> {
     public void add(K key, V value) {
         checkKeyValidity(key);
         Node<K, V> node = findNode(key);
+
         if (node.getKey() != null && node.getKey().compareTo(key) == 0) {
             node.setValue(value);
             return;

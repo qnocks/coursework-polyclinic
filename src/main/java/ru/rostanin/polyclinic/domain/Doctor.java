@@ -2,28 +2,35 @@ package ru.rostanin.polyclinic.domain;
 
 import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "doctors")
 public class Doctor {
 
-    // @NotNull(message = "This field can't be null")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "full_name")
     @NotBlank(message = "This field cannot be blank")
     @Size(max = 25, message = "Full name's length must be up to 25 characters")
     private String fullName;
 
+    @Column(name = "specialty")
     @NotBlank(message = "This field cannot be blank")
     private String specialty;
 
+    @Column(name = "office_number")
     @NotNull(message = "This field can't be null")
     @Min(value = 1, message = "The office number cannot be less then 1")
     private Integer officeNumber;
 
+    @Column(name = "schedule")
     @NotBlank(message = "This field cannot be blank")
     @Pattern(regexp = "([01]?[0-9]|2[0-3]):[0-5][0-9]-([01]?[0-9]|2[0-3]):[0-5][0-9]",
             message = "Doctor's schedule should match pattern HH:MM-HH:MM 24 hours")

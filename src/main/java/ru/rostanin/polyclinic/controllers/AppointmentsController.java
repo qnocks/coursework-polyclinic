@@ -7,19 +7,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.rostanin.polyclinic.domain.Appointment;
 import ru.rostanin.polyclinic.services.AppointmentsService;
+import ru.rostanin.polyclinic.services.DoctorsService;
+import ru.rostanin.polyclinic.services.PatientsService;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentsController {
 
     private final AppointmentsService appointmentsService;
+    private final DoctorsService doctorsService;
+    private final PatientsService patientsService;
 
     @Autowired
-    public AppointmentsController(AppointmentsService appointmentsService) {
+    public AppointmentsController(AppointmentsService appointmentsService,
+                                  DoctorsService doctorsService,
+                                  PatientsService patientsService) {
         this.appointmentsService = appointmentsService;
+        this.doctorsService = doctorsService;
+        this.patientsService = patientsService;
     }
 
     @GetMapping
@@ -30,7 +38,7 @@ public class AppointmentsController {
 
     @GetMapping("{id}")
     public String show(@PathVariable String id, Model model) {
-        model.addAttribute("appointments", Collections.singletonList(appointmentsService.get(id)));
+        model.addAttribute("appointments", List.of(appointmentsService.get(id)));
         return "appointments/list";
     }
 
@@ -41,10 +49,17 @@ public class AppointmentsController {
 
     @PostMapping("/new")
     public String create(@Valid @ModelAttribute Appointment appointment, BindingResult result) {
-        if (result.hasErrors()) {
-            System.out.println(result.getAllErrors() );
+        if (result.hasErrors()) return "appointments/new";
+
+        if (patientsService.findByRegistrationNumber(appointment.getRegistrationNumber()) == null) {
+            result.rejectValue("registrationNumber", "registrationNumber","There is no patient with this registration number");
             return "appointments/new";
         }
+        if (doctorsService.findByFullName(appointment.getFullName()) == null) {
+            result.rejectValue("fullName", "fullName","There is no doctor with this name");
+            return "appointments/new";
+        }
+
         appointmentsService.save(appointment);
         return "redirect:/appointments";
     }
@@ -75,4 +90,22 @@ public class AppointmentsController {
         return "redirect:/appointments";
     }
 
+    @GetMapping(value = "/delete", params = {"registrationNumber", "fullName"})
+    public String delete(@RequestParam(value = "registrationNumber") String registrationNumber,
+                         @RequestParam(value = "fullName") String fullName) {
+        appointmentsService.delete(registrationNumber, fullName);
+        return "redirect:/appointments";
+    }
+
+    @GetMapping("/clear")
+    public String deleteAll() {
+        appointmentsService.deleteAll();
+        return "redirect:/appointments";
+    }
+
+    @GetMapping("/persist")
+    public String persistData() {
+        appointmentsService.persist();
+        return "redirect:/appointments";
+    }
 }

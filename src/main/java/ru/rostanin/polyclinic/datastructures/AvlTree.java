@@ -6,7 +6,6 @@ import java.util.List;
 public class AvlTree<K extends Comparable<K>, T> {
 
     public static class Node<K extends Comparable<K>, T> {
-
         public int bf;
         public K key;
         public T value;
@@ -25,6 +24,7 @@ public class AvlTree<K extends Comparable<K>, T> {
     public Node<K, T> getRoot() {
         return root;
     }
+
 
     public T contains(K key) {
         Node<K, T> node = root;
@@ -246,7 +246,7 @@ public class AvlTree<K extends Comparable<K>, T> {
         return node;
     }
 
-    // Method returns a list of the post-order tree values.
+    // Method returns list representation in post-order
     public List<T> getListInPostOrder(Node<K, T> node) {
         var list = new ArrayList<T>();
         if (node != null) {

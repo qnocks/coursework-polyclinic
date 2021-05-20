@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="registrationNumber">Registration Number</label>
-                <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" th:value="${appointment.registrationNumber}">
+                <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" th:value="${appointment.registrationNumber}" readonly>
                 <small th:if="${#fields.hasErrors('registrationNumber')}" th:errors="*{registrationNumber}" th:errorClass="text-danger"></small>
             </div>
             <div class="form-group">

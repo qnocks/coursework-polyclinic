@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+  <header th:insert="fragments/general.html :: header"></header>
+
+  <h1 class="title">Patients</h1>
+
+  <div><a th:href="@{/patients/new}" class="btn btn-primary">Add a patient</a></div>
+
+  <table class="table table-striped">
+      <thead>
+      <tr>
+          <th scope="col">Id</th>
+          <th scope="col">RegistrationNumber</th>
+          <th scope="col">fullName</th>
+          <th scope="col">BirthDate</th>
+          <th scope="col">Address</th>
+          <th scope="col">Job</th>
+          <th scope="col">Doctor's name</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--/*@thymesVar id="patients" type="com.example.saodcourse3v.models.Patient"*/-->
+      <tr th:each="patient : ${patients}">
+          <td th:text="${patient.id}"></td>
+          <td th:text="${patient.registrationNumber}"></td>
+          <td th:text="${patient.fullName}"></td>
+          <td th:text="${patient.birthDate}"></td>
+          <td th:text="${patient.address}"></td>
+          <td th:text="${patient.job}"></td>
+          <td th:text="${appointment.fullName}"></td>
+          <td>
+              <a th:href="@{/patients/{id}/edit(id=${patient.registrationNumber})}">Edit</a>
+          </td>
+          <td>
+              <a th:href="@{/patients/{id}/delete(id=${patient.registrationNumber})}">Delete</a>
+          </td>
+      </tr>
+      </tbody>
+  </table>
+</body>
+</html>

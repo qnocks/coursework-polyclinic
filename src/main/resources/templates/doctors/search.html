@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+
+<header th:insert="fragments/general.html :: header"></header>
+
+<h1 class="title">Doctors</h1>
+
+<div><a th:href="@{/doctors/new}" class="btn btn-primary">Add a doctor</a></div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Specialty</th>
+            <th scope="col">Office number</th>
+            <th scope="col">Schedule</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="doctor, state : ${doctors}">
+            <td th:text="${doctor.id}"></td>
+            <td th:text="${doctor.fullName}"></td>
+            <td th:text="${doctor.specialty}"></td>
+            <td th:text="${doctor.officeNumber}"></td>
+            <td th:text="${doctor.schedule}"></td>
+            <td>
+                <a th:href="@{/doctors/{id}/edit(id=${doctor.fullName})}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/doctors/{id}/delete(id=${doctor.fullName})}">Delete</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="col">Patient's name</th>
+            <th scope="col">Patient's reg. number</th>
+        </tr>
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.fullName}"></td>
+            <td th:text="${patient.registrationNumber}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</body>
+</html>
