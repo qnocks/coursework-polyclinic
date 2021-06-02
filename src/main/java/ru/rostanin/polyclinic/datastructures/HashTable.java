@@ -2,6 +2,7 @@ package ru.rostanin.polyclinic.datastructures;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("unchecked")
 public class HashTable<K extends Comparable<K>, T> {
@@ -9,6 +10,7 @@ public class HashTable<K extends Comparable<K>, T> {
     public static class Entry<K extends Comparable<K>, T> {
         public K key;
         public T value;
+        public boolean deleted;
         public Entry(K key, T value) {
             this.key = key;
             this.value = value;
@@ -24,6 +26,8 @@ public class HashTable<K extends Comparable<K>, T> {
 
     private int size;
     private int capacity;
+    // TODO: 12:01 correction
+    private boolean used;
 
     public HashTable() {
         this(DEFAULT_CAPACITY);
@@ -51,6 +55,7 @@ public class HashTable<K extends Comparable<K>, T> {
         if (entries[hash] == null) {
             entries[hash] = new Entry(key, value);
             size++;
+            used = true;
         }
 
         // calc load factor
@@ -77,7 +82,9 @@ public class HashTable<K extends Comparable<K>, T> {
         int hash = findHash(key);
         if (hash < 0) return;
 
-        entries[hash] = null;
+        // TODO: 11:18 correction
+        entries[hash].deleted = true;
+//        entries[hash] = null;
         size--;
     }
 
@@ -102,7 +109,11 @@ public class HashTable<K extends Comparable<K>, T> {
         List<T> list = new ArrayList<>();
 
         for (int i = 0; i < capacity; i++) {
-            if (entries[i] != null) {
+            //TODO: 11:18 correction
+//            if (entries[i] != null) {
+//                list.add((T) entries[i].value);
+//            }
+            if (entries[i] != null && !(entries[i]).deleted) {
                 list.add((T) entries[i].value);
             }
         }
@@ -146,7 +157,8 @@ public class HashTable<K extends Comparable<K>, T> {
     // helper method to find hash by key
     private int findHash(K key) {
 
-        if (size == 0) return -1;
+        // TODO: 12:01 correction
+        if (size == 0 && !used) return -1;
 
         int attempt = 0;
         int hash = hash(key);
