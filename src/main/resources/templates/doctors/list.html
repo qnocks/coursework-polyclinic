@@ -2,13 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.w3.org/1999/xhtml" lang="en">
 <head th:replace="fragments/general.html :: head"></head>
 <body>
-
     <header th:insert="fragments/general.html :: header"></header>
-
     <h1 class="title">Doctors</h1>
-
     <div><a th:href="@{/doctors/new}" class="btn btn-primary">Add a doctor</a></div>
-
     <table class="table table-striped">
         <thead>
             <tr>

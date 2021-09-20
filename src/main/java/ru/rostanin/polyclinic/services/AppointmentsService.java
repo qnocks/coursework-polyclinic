@@ -11,9 +11,7 @@ import java.util.List;
 
 @Service
 public class AppointmentsService {
-
     private final CrudDao<String, Appointment> appointmentsCrudDao;
-
     private final AppointmentsRepository appointmentsRepository;
 
     @Autowired

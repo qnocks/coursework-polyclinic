@@ -26,7 +26,6 @@ public class HashTable<K extends Comparable<K>, T> {
 
     private int size;
     private int capacity;
-    // TODO: 12:01 correction
     private boolean used;
 
     public HashTable() {
@@ -82,9 +81,7 @@ public class HashTable<K extends Comparable<K>, T> {
         int hash = findHash(key);
         if (hash < 0) return;
 
-        // TODO: 11:18 correction
         entries[hash].deleted = true;
-//        entries[hash] = null;
         size--;
     }
 
@@ -109,10 +106,6 @@ public class HashTable<K extends Comparable<K>, T> {
         List<T> list = new ArrayList<>();
 
         for (int i = 0; i < capacity; i++) {
-            //TODO: 11:18 correction
-//            if (entries[i] != null) {
-//                list.add((T) entries[i].value);
-//            }
             if (entries[i] != null && !(entries[i]).deleted) {
                 list.add((T) entries[i].value);
             }
@@ -157,7 +150,6 @@ public class HashTable<K extends Comparable<K>, T> {
     // helper method to find hash by key
     private int findHash(K key) {
 
-        // TODO: 12:01 correction
         if (size == 0 && !used) return -1;
 
         int attempt = 0;

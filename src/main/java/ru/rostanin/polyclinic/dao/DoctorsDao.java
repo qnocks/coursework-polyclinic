@@ -8,6 +8,7 @@ import ru.rostanin.polyclinic.domain.Patient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DoctorsDao implements CrudDao<String, Doctor> {

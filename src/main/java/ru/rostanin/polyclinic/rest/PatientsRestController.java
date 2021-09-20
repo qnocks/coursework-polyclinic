@@ -35,7 +35,6 @@ public class PatientsRestController {
         return new ResponseEntity<>(patients.save(patient), HttpStatus.OK);
     }
 
-    // TODO: Doesn't work
     @PatchMapping("{id}")
     public ResponseEntity<Patient> patch(@PathVariable String id, @RequestBody Patient patient) {
         return new ResponseEntity<>(patients.update(id, patient), HttpStatus.OK);

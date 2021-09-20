@@ -11,12 +11,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
+@Entity
+@Table(name = "patients")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "patients")
 public class Patient {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,6 @@ public class Patient {
     @Column(name = "full_name")
     @NotBlank(message = "Patient's full name cannot be blank")
     private String fullName;
-
 
     @Column(name = "birth_date")
     @NotNull(message = "This field cannot be null")

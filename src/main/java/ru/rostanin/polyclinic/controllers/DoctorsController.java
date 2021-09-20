@@ -19,11 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/doctors")
 public class DoctorsController {
-
     private final DoctorsService doctorsService;
     private final PatientsService patientsService;
     private final AppointmentsService appointmentsService;
-
 
     @Autowired
     public DoctorsController(DoctorsService doctorsService, PatientsService patientsService, AppointmentsService appointmentsService) {
